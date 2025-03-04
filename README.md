@@ -1,7 +1,7 @@
-# Industrial Fault Detection System
+# Industrial Equipment’s Health Monitoring System
 
 ## Introduction
-The Industrial Fault Detection System is a machine learning-powered solution designed to identify anomalies in time-series sensor data, detect dents and cracks in images, and predict wire faults using structured numerical data. This system helps in predictive maintenance by analyzing incoming data, detecting irregularities, and providing real-time visual insights.
+The Industrial Equipment’s Health Monitoring System is a machine learning-powered solution designed to identify anomalies in time-series sensor data, detect dents and cracks in images, and predict wire faults using structured numerical data. This system helps in predictive maintenance by analyzing incoming data, detecting irregularities, and providing real-time visual insights.
 
 ## Features
 ✅ **Anomaly Detection:** Uses an LSTM Autoencoder to detect abnormal sensor readings in time-series data.
