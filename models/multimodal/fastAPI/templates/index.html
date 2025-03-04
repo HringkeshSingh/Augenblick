@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fault & Damage Detection</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>🚀 Fault & Damage Detection System</h1>
+        <p>AI-powered system to detect structural & electrical issues</p>
+    </header>
+
+    <main>
+        <!-- DAMAGE DETECTION SECTION -->
+        <section class="container">
+            <h2>🛠 Damage Detection</h2>
+            <form id="damage-form">
+                <input type="file" id="image" accept="image/*" required>
+                <button type="submit" class="btn">Detect Damage</button>
+            </form>
+
+            <div class="image-container">
+                <div class="image-box">
+                    <h3>Original Image</h3>
+                    <img id="original-img" src="" alt="Original Image">
+                </div>
+                <div class="image-box">
+                    <h3>Marked Image</h3>
+                    <img id="marked-img" src="" alt="Marked Image">
+                </div>
+            </div>
+
+            <pre id="damage-output"></pre>
+        </section>
+
+        <!-- FAULTY WIRE DETECTION SECTION -->
+        <section class="container">
+            <h2>⚡ Faulty Wire Detection</h2>
+            <form id="wire-form">
+                <div class="input-group">
+                    <input type="number" id="voltage" placeholder="Voltage (V)" required>
+                    <input type="number" id="current" placeholder="Current (A)" required>
+                    <input type="number" id="resistance" placeholder="Resistance (Ω)" required>
+                </div>
+                <button type="submit" class="btn">Check Fault</button>
+            </form>
+
+            <pre id="wire-output"></pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Fault & Damage Detection System | Built with ❤️</p>
+    </footer>
+
+    <script>
+        // DAMAGE DETECTION - Handle Image Upload & Display Results
+        document.getElementById("damage-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const file = document.getElementById("image").files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch("/detect_damage", { method: "POST", body: formData });
+            const result = await response.json();
+
+            document.getElementById("damage-output").innerText = JSON.stringify(result.detections, null, 2);
+            document.getElementById("original-img").src = result.original_image;
+            document.getElementById("marked-img").src = result.marked_image;
+        });
+
+        // FAULTY WIRE DETECTION - Handle Data Input & Display Results
+        document.getElementById("wire-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const voltage = document.getElementById("voltage").value;
+            const current = document.getElementById("current").value;
+            const resistance = document.getElementById("resistance").value;
+
+            const response = await fetch("/predict_wire_fault", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ voltage, current, resistance }),
+            });
+
+            const result = await response.json();
+            document.getElementById("wire-output").innerText = result.status;
+        });
+    </script>
+
+</body>
+</html>

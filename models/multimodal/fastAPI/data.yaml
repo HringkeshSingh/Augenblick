@@ -1,0 +1,5 @@
+train: data_images/train
+val: data_images/test
+nc: 2
+names: ['crack',
+        'dent']
