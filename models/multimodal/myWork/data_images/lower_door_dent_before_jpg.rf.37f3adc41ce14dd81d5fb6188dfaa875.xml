@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>lower_door_dent_before_jpg.rf.37f3adc41ce14dd81d5fb6188dfaa875.jpg</filename>
+	<path>lower_door_dent_before_jpg.rf.37f3adc41ce14dd81d5fb6188dfaa875.jpg</path>
+	<source>
+		<database>roboflow.com</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dent</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>257</xmin>
+			<xmax>361</xmax>
+			<ymin>349</ymin>
+			<ymax>415</ymax>
+		</bndbox>
+	</object>
+</annotation>

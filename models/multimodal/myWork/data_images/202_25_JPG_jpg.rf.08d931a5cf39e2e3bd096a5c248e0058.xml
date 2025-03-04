@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>202_25_JPG_jpg.rf.08d931a5cf39e2e3bd096a5c248e0058.jpg</filename>
+	<path>202_25_JPG_jpg.rf.08d931a5cf39e2e3bd096a5c248e0058.jpg</path>
+	<source>
+		<database>roboflow.com</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dent</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>127</xmin>
+			<xmax>285</xmax>
+			<ymin>403</ymin>
+			<ymax>608</ymax>
+		</bndbox>
+	</object>
+</annotation>

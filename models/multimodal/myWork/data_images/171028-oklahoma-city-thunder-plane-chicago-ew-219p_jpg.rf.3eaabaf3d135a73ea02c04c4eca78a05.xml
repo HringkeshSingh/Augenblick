@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>171028-oklahoma-city-thunder-plane-chicago-ew-219p_jpg.rf.3eaabaf3d135a73ea02c04c4eca78a05.jpg</filename>
+	<path>171028-oklahoma-city-thunder-plane-chicago-ew-219p_jpg.rf.3eaabaf3d135a73ea02c04c4eca78a05.jpg</path>
+	<source>
+		<database>roboflow.com</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>dent</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>167</xmin>
+			<xmax>383</xmax>
+			<ymin>191</ymin>
+			<ymax>329</ymax>
+		</bndbox>
+	</object>
+</annotation>

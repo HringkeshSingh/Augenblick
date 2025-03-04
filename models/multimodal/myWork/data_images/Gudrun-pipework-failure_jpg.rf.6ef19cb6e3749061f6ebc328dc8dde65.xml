@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>Gudrun-pipework-failure_jpg.rf.6ef19cb6e3749061f6ebc328dc8dde65.jpg</filename>
+	<path>Gudrun-pipework-failure_jpg.rf.6ef19cb6e3749061f6ebc328dc8dde65.jpg</path>
+	<source>
+		<database>roboflow.com</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>crack</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>239</xmin>
+			<xmax>533</xmax>
+			<ymin>314</ymin>
+			<ymax>350</ymax>
+		</bndbox>
+	</object>
+</annotation>

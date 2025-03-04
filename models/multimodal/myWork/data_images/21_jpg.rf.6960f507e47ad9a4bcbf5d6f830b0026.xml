@@ -1,0 +1,27 @@
+<annotation>
+	<folder></folder>
+	<filename>21_jpg.rf.6960f507e47ad9a4bcbf5d6f830b0026.jpg</filename>
+	<path>21_jpg.rf.6960f507e47ad9a4bcbf5d6f830b0026.jpg</path>
+	<source>
+		<database>roboflow.com</database>
+	</source>
+	<size>
+		<width>640</width>
+		<height>640</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>crack</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<occluded>0</occluded>
+		<bndbox>
+			<xmin>85</xmin>
+			<xmax>126</xmax>
+			<ymin>215</ymin>
+			<ymax>269</ymax>
+		</bndbox>
+	</object>
+</annotation>
