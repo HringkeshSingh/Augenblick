@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Detection System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js@2.12.1/dist/plotly.min.js"></script>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showPage('dashboard')">🏠 Dashboard</a></li>
+            <li><a href="#" onclick="showPage('anomaly')">📊 Anomaly Detection</a></li>
+            <li><a href="#" onclick="showPage('damage')">🛠 Damage Detection</a></li>
+            <li><a href="#" onclick="showPage('wire')">⚡ Wire Fault Detection</a></li>
+        </ul>
+    </nav>
+
+    <!-- DASHBOARD PAGE (Includes all graphs from previous setup) -->
+    <section id="dashboard" class="page">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>🚀 AI Detection System Dashboard</h1>
+                <p class="lead">View analysis of engine health, anomalies, and fault detection.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Anomaly Timeline</h5>
+                            <div id="timeline-chart" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Error Distribution</h5>
+                            <div id="error-distribution" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Unit Health Overview</h5>
+                            <div id="unit-health" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Feature Importance</h5>
+                            <div id="feature-importance" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ANOMALY DETECTION PAGE -->
+    <section id="anomaly" class="page hidden">
+        <h1>📊 Anomaly Detection</h1>
+        <form id="anomaly-form">
+            <input type="file" id="csv-file" accept=".csv" required>
+            <button type="submit" class="btn">Detect Anomalies</button>
+        </form>
+        <pre id="anomaly-result"></pre>
+    </section>
+
+    <!-- DAMAGE DETECTION PAGE -->
+    <section id="damage" class="page hidden">
+        <h1>🛠 Damage Detection</h1>
+        <form id="damage-form">
+            <input type="file" id="image-file" accept="image/*" required>
+            <button type="submit" class="btn">Detect Damage</button>
+        </form>
+        <div class="image-container">
+            <div class="image-box">
+                <h3>Original Image</h3>
+                <img id="original-img" src="" alt="Original Image">
+            </div>
+            <div class="image-box">
+                <h3>Marked Image</h3>
+                <img id="marked-img" src="" alt="Marked Image">
+            </div>
+        </div>
+        <!-- <pre id="damage-result"></pre> -->
+    </section>
+
+    <!-- WIRE FAULT DETECTION PAGE -->
+    <section id="wire" class="page hidden">
+        <h1>⚡ Wire Fault Detection</h1>
+        <form id="wire-form">
+            <input type="number" id="voltage" placeholder="Voltage (V)" required>
+            <input type="number" id="current" placeholder="Current (A)" required>
+            <input type="number" id="resistance" placeholder="Resistance (Ω)" required>
+            <button type="submit" class="btn">Check Fault</button>
+        </form>
+        <pre id="wire-result"></pre>
+    </section>
+
+    <script>
+        // Function to switch between pages
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        // ANOMALY DETECTION - Handle CSV Upload & Display Results
+        document.getElementById("anomaly-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const file = document.getElementById("csv-file").files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch("/predict", { method: "POST", body: formData });
+            const result = await response.json();
+            document.getElementById("anomaly-result").innerText = JSON.stringify(result, null, 2);
+        });
+
+        // DAMAGE DETECTION - Handle Image Upload & Display Results
+        document.getElementById("damage-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const file = document.getElementById("image-file").files[0];
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const response = await fetch("/detect_damage", { method: "POST", body: formData });
+            const result = await response.json();
+
+            // document.getElementById("damage-result").innerText = JSON.stringify(result.detections, null, 2);
+            document.getElementById("original-img").src = result.original_image;
+            document.getElementById("marked-img").src = result.marked_image;
+        });
+
+        // WIRE FAULT DETECTION - Handle Input Data & Display Results
+        document.getElementById("wire-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const voltage = document.getElementById("voltage").value;
+            const current = document.getElementById("current").value;
+            const resistance = document.getElementById("resistance").value;
+
+            const response = await fetch("/predict_wire_fault", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ voltage, current, resistance }),
+            });
+
+            const result = await response.json();
+            document.getElementById("wire-result").innerText = result.status;
+        });
+
+        // Load existing dashboard graphs
+        window.onload = () => {
+            fetch('/dashboard_data').then(res => res.json()).then(data => {
+                Plotly.newPlot('timeline-chart', JSON.parse(data.timeline));
+                Plotly.newPlot('error-distribution', JSON.parse(data.error_distribution));
+                Plotly.newPlot('unit-health', JSON.parse(data.unit_health));
+                Plotly.newPlot('feature-importance', JSON.parse(data.feature_importance));
+            });
+        };
+    </script>
+
+</body>
+</html>
