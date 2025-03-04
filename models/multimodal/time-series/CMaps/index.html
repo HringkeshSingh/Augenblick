@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Aviation Anomaly Detection</title>
+  </head>
+  <body>
+    <h1>Upload CSV for Anomaly Detection</h1>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".csv" required />
+      <button type="submit">Detect Anomalies</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+      // Handle form submission with JavaScript to display results without reloading
+      const form = document.querySelector("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        try {
+          // Update URL to point to the backend running on port 8000
+          const response = await fetch("http://127.0.0.1:8000/predict", {
+            method: "POST",
+            body: formData,
+          });
+
+          // Check if the response is OK (status 200-299)
+          if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+          }
+
+          const result = await response.json();
+          document.getElementById("result").innerHTML = `<pre>${JSON.stringify(
+            result,
+            null,
+            2
+          )}</pre>`;
+        } catch (error) {
+          console.error("Error during fetch:", error);
+          document.getElementById(
+            "result"
+          ).innerHTML = `<p>Error: ${error.message}</p>`;
+        }
+      });
+    </script>
+  </body>
+</html>
